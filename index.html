@@ -5,10 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Indique & Ganhe</title>
 
-<!-- FAVICON (apenas para a aba do navegador) -->
-<link rel="icon" type="image/x-icon" href="logotipo.ico?v=1">
-<link rel="shortcut icon" href="logotipo.ico?v=1">
+<!-- FAVICON -->
+<link rel="icon" type="image/x-icon" href="logo.ico">
+<link rel="shortcut icon" href="logo.ico">
 
+<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
@@ -39,10 +40,12 @@ body {
 }
 #splash img {
   width: 350px;
+  max-width:80%;
   margin-bottom:20px;
   animation: fadeInDown 1.5s;
 }
 #splash p { font-size:1.5rem; color:#004aad; font-weight:500; animation: fadeIn 2s; }
+
 @keyframes fadeInDown { from {opacity:0; transform:translateY(-50px);} to {opacity:1; transform:translateY(0);} }
 @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
 
@@ -61,8 +64,8 @@ body {
 }
 #app.sair { opacity:0; transform:scale(0.95); }
 
-/* Logo no card - continua usando logo.ico */
-#logo-card { width: 450px; margin-bottom:25px; }
+/* Logo no card */
+#logo-card { width: 450px; max-width:80%; margin-bottom:25px; }
 
 /* Título */
 h1.app-title { margin-bottom:15px; line-height:1.2; font-size:2.5rem; color:#004aad; font-weight:700; text-transform:uppercase; letter-spacing:1px; }
@@ -103,7 +106,7 @@ input:focus, select:focus { border-color:#007bff; outline:none; }
   border-radius:20px;
   padding:40px 50px;
   max-width:80%;
-  min-width:300px;
+  min-width:280px;
   text-align:center;
   box-shadow:0 15px 40px rgba(0,0,0,0.25);
   display:flex; flex-direction:column; align-items:center;
@@ -111,23 +114,44 @@ input:focus, select:focus { border-color:#007bff; outline:none; }
 }
 @keyframes fadeInScale { from {opacity:0; transform:scale(0.8);} to {opacity:1; transform:scale(1);} }
 
-/* Logo na tela de congratulation - continua usando logo.ico */
-#congrats-logo { width: 300px; margin-bottom:25px; animation:fadeInDown 1s; }
+/* Logo na tela de congratulation */
+#congrats-logo { width: 300px; max-width:70%; margin-bottom:25px; animation:fadeInDown 1s; }
 
 /* Texto principal */
-#congrats h2 { font-size:2.8rem; color:#004aad; text-shadow: 2px 2px 10px rgba(0,0,0,0.3); animation:fadeInUp 1s; word-break: break-word; }
-#congrats p { font-size:1.8rem; color:#004aad; text-shadow:1px 1px 4px rgba(0,0,0,0.2); animation:fadeInUp 1s; }
+#congrats h2 { font-size:2.2rem; color:#004aad; text-shadow: 2px 2px 10px rgba(0,0,0,0.3); animation:fadeInUp 1s; word-break: break-word; }
+#congrats p { font-size:1.5rem; color:#004aad; text-shadow:1px 1px 4px rgba(0,0,0,0.2); animation:fadeInUp 1s; }
 
-/* Confetes cinematográficos sofisticados */
+/* Confetes cinematográficos */
 #congrats-confetti { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; overflow:hidden; z-index:10; }
 .congrats-confetto {
-  width:15px; height:15px; position:absolute; border-radius:50%;
+  width:12px; height:12px; position:absolute; border-radius:50%;
   opacity:0;
   animation:fallConfetti 3s forwards;
 }
 @keyframes fallConfetti {
   0% { transform: translateY(0) rotate(0deg) scale(0.5); opacity:1; }
   100% { transform: translateY(700px) rotate(720deg) scale(1.2); opacity:0; }
+}
+
+/* MEDIA QUERIES - Responsivo para tablets e celulares */
+@media screen and (max-width:768px){
+  h1.app-title { font-size:2rem; }
+  p.intro { font-size:1rem; }
+  input, select { padding:12px; font-size:0.95rem; }
+  .btn { padding:12px 20px; font-size:1rem; }
+  #congrats h2 { font-size:1.8rem; }
+  #congrats p { font-size:1.2rem; }
+}
+
+@media screen and (max-width:480px){
+  #app { padding:20px 25px; }
+  h1.app-title { font-size:1.5rem; }
+  p.intro { font-size:0.95rem; }
+  input, select { padding:10px; font-size:0.9rem; }
+  .btn { padding:10px 18px; font-size:0.95rem; }
+  #congrats-card { padding:25px 30px; }
+  #congrats h2 { font-size:1.5rem; }
+  #congrats p { font-size:1rem; }
 }
 </style>
 </head>
@@ -175,7 +199,7 @@ input:focus, select:focus { border-color:#007bff; outline:none; }
   <div id="confetti"></div>
 </div>
 
-<!-- Tela de congratulation sofisticada -->
+<!-- Tela de congratulation -->
 <div id="congrats">
   <div id="congrats-card">
     <img id="congrats-logo" src="logo.ico" alt="UniCesumar Logo">
@@ -190,10 +214,7 @@ window.addEventListener("load", () => {
   setTimeout(() => {
     const splash = document.getElementById("splash");
     splash.style.opacity=0;
-    setTimeout(()=>{
-      splash.style.display="none";
-      document.getElementById("app").style.display="block";
-    },1500);
+    setTimeout(()=>{ splash.style.display="none"; document.getElementById("app").style.display="block"; },1500);
   },2000);
 });
 
@@ -239,7 +260,7 @@ function mostrarCongrats(nome){
     setTimeout(()=>{ conf.remove(); },5000);
   }
 
-  // Desaparece suavemente após 5 segundos
+  // Desaparece após 5s
   setTimeout(()=>{
     c.style.transition="opacity 1s ease";
     c.style.opacity=0;
