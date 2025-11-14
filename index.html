@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Indique & Ganhe</title>
 
-<!-- FAVICON -->
 <link rel="icon" type="image/x-icon" href="logotipo.ico?v=1">
 <link rel="shortcut icon" href="logotipo.ico?v=1">
 
@@ -20,13 +19,15 @@ body { background: linear-gradient(135deg, #004aad, #007bff); display:flex; just
 #splash { position: fixed; width: 100%; height: 100%; background-color: #fff; display:flex; justify-content:center; align-items:center; flex-direction:column; opacity:1; transition: opacity 1.5s ease; z-index:10; }
 #splash img { width: 350px; margin-bottom:20px; animation: fadeInDown 1.5s; }
 #splash p { font-size:1.5rem; color:#004aad; font-weight:500; animation: fadeIn 2s; }
+
+/* Keyframes */
 @keyframes fadeInDown { from {opacity:0; transform:translateY(-50px);} to {opacity:1; transform:translateY(0);} }
 @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
 
 /* App Card */
 #app { background:white; border-radius:15px; box-shadow:0 10px 25px rgba(0,0,0,0.2); padding:30px 40px; max-width:550px; width:90%; text-align:center; position:relative; display:none; transition: opacity 0.8s ease, transform 0.8s ease; }
 #app.sair { opacity:0; transform:scale(0.95); }
-#logo-card { width: 450px; margin-bottom:25px; }
+#logo-card { width: 450px; margin-bottom:25px; max-width:90%; }
 h1.app-title { margin-bottom:15px; line-height:1.2; font-size:2.5rem; color:#004aad; font-weight:700; text-transform:uppercase; letter-spacing:1px; }
 p.intro { color:#333; margin-bottom:20px; font-size:1.2rem; }
 input { width:100%; padding:14px; margin-bottom:15px; border-radius:8px; border:1px solid #ccc; font-size:1rem; transition:0.3s; }
@@ -43,10 +44,9 @@ input:focus { border-color:#007bff; outline:none; }
 .btn:hover { background:#0056b3; transform:scale(1.08); box-shadow:0 8px 20px rgba(0,0,0,0.3); }
 .btn-sair { background:#ff4d4d; }
 .btn-sair:hover { background:#cc0000; transform:scale(1.08); }
-
 #success-msg { display:none; color:green; font-weight:bold; margin-top:15px; font-size:1.2rem; position:relative; }
 
-/* Congratulation */
+/* Congrats */
 #congrats { position:fixed; top:0; left:0; width:100%; height:100%; background: linear-gradient(135deg, #e0f0ff, #ffffff); display:flex; justify-content:center; align-items:center; flex-direction:column; z-index:50; display:none; overflow:hidden; opacity:1; transition: opacity 1s ease; }
 #congrats-card { background:white; border-radius:20px; padding:40px 50px; max-width:80%; min-width:300px; text-align:center; box-shadow:0 15px 40px rgba(0,0,0,0.25); display:flex; flex-direction:column; align-items:center; animation:fadeInScale 1s; }
 @keyframes fadeInScale { from {opacity:0; transform:scale(0.8);} to {opacity:1; transform:scale(1);} }
@@ -56,6 +56,30 @@ input:focus { border-color:#007bff; outline:none; }
 #congrats-confetti { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; overflow:hidden; z-index:10; }
 .congrats-confetto { width:15px; height:15px; position:absolute; border-radius:50%; opacity:0; animation:fallConfetti 3s forwards; }
 @keyframes fallConfetti { 0% { transform: translateY(0) rotate(0deg) scale(0.5); opacity:1; } 100% { transform: translateY(700px) rotate(720deg) scale(1.2); opacity:0; } }
+
+/* Responsivo */
+@media(max-width:1024px){
+  #app { padding:25px 30px; }
+  h1.app-title { font-size:2rem; }
+  p.intro { font-size:1rem; }
+  .btn { padding:12px 20px; font-size:1rem; }
+  #logo-card { width: 350px; }
+}
+@media(max-width:768px){
+  #app { padding:20px 20px; width:95%; }
+  h1.app-title { font-size:1.8rem; }
+  p.intro { font-size:0.95rem; }
+  .btn { padding:10px 18px; font-size:0.95rem; }
+  #logo-card { width: 300px; }
+}
+@media(max-width:480px){
+  #app { padding:15px 15px; width:98%; }
+  h1.app-title { font-size:1.5rem; }
+  p.intro { font-size:0.9rem; }
+  input, #dropdown-interesse { padding:12px; font-size:0.9rem; }
+  .btn { padding:8px 15px; font-size:0.9rem; }
+  #logo-card { width: 250px; }
+}
 </style>
 </head>
 <body>
@@ -76,7 +100,6 @@ input:focus { border-color:#007bff; outline:none; }
     <input type="text" id="nome-indicado" placeholder="Nome do amigo" required />
     <input type="tel" id="telefone-indicado" placeholder="Telefone do amigo" required />
 
-    <!-- Dropdown Custom -->
     <div id="dropdown-interesse">
       <span id="dropdown-display">Área de interesse (opcional)</span>
       <div id="dropdown-options"></div>
@@ -111,10 +134,10 @@ window.addEventListener("load", () => {
   },2000);
 });
 
-// Áreas e cursos
+// Áreas e cursos (mesmo código anterior)
 const areas = {
-  "Educação": ["Licenciatura em Ciências Biológicas", "Licenciatura em Educação Física", "Licenciatura em Educação Especial", "Licenciatura em Filosofia", "2ª Licenciatura em Filosofia", "Licenciatura em Física", "Licenciatura em Geografia", "2ª Licenciatura em Geografia", "Licenciatura em História", "2ª Licenciatura em História", "2ª Habilitação em Inglês", "Licenciatura em Letras - Português/Inglês", "Licenciatura em Letras - Libras", "Licenciatura em Matemática", "2ª Licenciatura em Matemática", "Licenciatura em Pedagogia", "2ª Licenciatura em Pedagogia", "Bacharelado em Psicopedagogia", "Licenciatura em Química", "Licenciatura em Sociologia", "2ª Licenciatura em Sociologia", "Bacharelado em Teologia", "Tecnologia em Acompanhamento do Transtorno Espectro Autista - TEA"],
-  "Artes e Design": ["Licenciatura em Artes Visuais","Licenciatura em Dança","Tecnólogo em Design de Interiores","Tecnólogo em Design de Moda","Tecnólogo em Design Musical","Tecnólogo em Design de Produto","Licenciatura em Música","Tecnólogo em Design de Animação","Tecnólogo em Design de Gráfico","Licenciatura em Teatro","Bacharelado em Cinema e Audiovisual"],
+  "Educação": ["Licenciatura em Ciências Biológicas","Licenciatura em Educação Física","Licenciatura em Educação Especial","Licenciatura em Filosofia","2ª Licenciatura em Filosofia","Licenciatura em Física","Licenciatura em Geografia","2ª Licenciatura em Geografia","Licenciatura em História","2ª Licenciatura em História","2ª Habilitação em Inglês","Licenciatura em Letras - Português/Inglês","Licenciatura em Letras - Libras","Licenciatura em Matemática","2ª Licenciatura em Matemática","Licenciatura em Pedagogia","2ª Licenciatura em Pedagogia","Bacharelado em Psicopedagogia","Licenciatura em Química","Licenciatura em Sociologia","2ª Licenciatura em Sociologia","Bacharelado em Teologia","Tecnologia em Acompanhamento do Transtorno Espectro Autista - TEA"],
+  "Artes e Design":["Licenciatura em Artes Visuais","Licenciatura em Dança","Tecnólogo em Design de Interiores","Tecnólogo em Design de Moda","Tecnólogo em Design Musical","Tecnólogo em Design de Produto","Licenciatura em Música","Tecnólogo em Design de Animação","Tecnólogo em Design de Gráfico","Licenciatura em Teatro","Bacharelado em Cinema e Audiovisual"],
   "Gestão de Negócios":["Bacharelado em Administração","Bacharelado em Ciências Contábeis","Tecnólogo em Comércio Exterior","Bacharelado em Ciências Econômicas","Tecnólogo em Gestão de E-commerce","Tecnólogo em Empreendedorismo","Tecnólogo em Gestão de Cooperativas","Tecnólogo em Gestão Comercial","Tecnólogo em Gestão do Esporte e Alto Rendimento","Tecnólogo em Gestão de Farmácia","Tecnólogo em Gestão Financeira","Tecnólogo em Gestão de Negócios Imobiliários","Tecnólogo em Gestão Pública","Tecnólogo em Gestão de Lojas e PDV","Tecnólogo em Gestão da Qualidade","Tecnólogo em Gestão das Organizações do Terceiro Setor","Tecnólogo em Gestão de Turismo","Tecnólogo em Gestão de Investimentos e Mercado Financeiro","Tecnólogo em Logística","Tecnólogo em Mídias Sociais Digitais","Tecnólogo em Marketing","Tecnólogo em Processos Gerenciais","Tecnólogo em Gestão de Recursos Humanos","Tecnólogo em Secretariado","Tecnólogo em Gestão da Saúde Pública","Tecnólogo em Inteligência Artificial e Machine Learning","Tecnólogo em Inteligência de Mercado","Tecnólogo em Negócios e Customer Experiênce CX","Tecnólogo em Negócios Sustentáveis e ESG"],
   "Jurídico e Segurança":["Tecnólogo em Criminologia","Tecnólogo em Investigação Forense e Pericia Criminal","Tecnólogo em Gestão de Serviços Judiciais e Notariais","Tecnólogo em Segurança Pública","Bacharelado em Serviço Social","Tecnólogo em Gestão de Segurança Privada","Tecnólogo em Conselheiro Tutelar"],
   "Comunicação":["Tecnólogo em Comunicação Institucional","Tecnólogo em Fotografia","Bacharelado em Jornalismo","Bacharelado em Publicidade e Propaganda","Bacharelado em Relações Públicas","Tecnólogo em Ciência da Criatividade"],
@@ -188,10 +211,8 @@ dropdown.addEventListener("click", (e) => {
   }
 });
 
-// Fecha dropdown somente se não estiver escolhendo curso
 document.addEventListener("click", () => { if(!selectingCurso) optionsContainer.style.display = "none"; });
 
-// Enviar indicação
 function enviarIndicacao(event){
   event.preventDefault();
   const nomeIndicador = document.getElementById("nome-indicador").value;
@@ -202,9 +223,11 @@ function enviarIndicacao(event){
     telefoneIndicado:document.getElementById("telefone-indicado").value,
     areaInteresse:display.textContent
   };
-  fetch("https://script.google.com/macros/s/AKfycbz_mRW8coFu8X-oGThKXm3p74KjHaTmPQcvUmB28Xq64L7S3ZRSWeUrochj19qjHNHY/exec",{
-    method:"POST", mode:"no-cors", body:JSON.stringify(data)
-  }).then(()=>{ mostrarCongrats(nomeIndicador); document.getElementById("form-indicacao").reset(); display.textContent="Área de interesse (opcional)"; });
+  fetch("https://script.google.com/macros/s/AKfycbz_mRW8coFu8X-oGThKXm3p74KjHaTmPQcvUmB28Xq64L7S3ZRSWeUrochj19qjHNHY/exec",{method:"POST", mode:"no-cors", body:JSON.stringify(data)}).then(()=>{
+    mostrarCongrats(nomeIndicador);
+    document.getElementById("form-indicacao").reset();
+    display.textContent = "Área de interesse (opcional)";
+  });
 }
 
 // Congrats
@@ -212,9 +235,7 @@ function mostrarCongrats(nome){
   const c = document.getElementById("congrats");
   const confettiContainer = document.getElementById("congrats-confetti");
   const texto = document.getElementById("congrats-text");
-
   texto.textContent = `Parabéns, ${nome}! Obrigado por sua indicação`;
-
   c.style.display="flex"; 
   c.style.opacity=1;
 
