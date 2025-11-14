@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indique & Ganhe</title>
+
+<!-- FAVICON (apenas para a aba do navegador) -->
+<link rel="icon" type="image/x-icon" href="logotipo.ico?v=1">
+<link rel="shortcut icon" href="logotipo.ico?v=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Roboto', sans-serif; }
+html, body { height:100%; overflow:hidden; }
+
+/* Background */
+body {
+  background: linear-gradient(135deg, #004aad, #007bff);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* Splash inicial */
+#splash {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity:1;
+  transition: opacity 1.5s ease;
+  z-index: 10;
+}
+#splash img {
+  width: 350px;
+  margin-bottom:20px;
+  animation: fadeInDown 1.5s;
+}
+#splash p { font-size:1.5rem; color:#004aad; font-weight:500; animation: fadeIn 2s; }
+@keyframes fadeInDown { from {opacity:0; transform:translateY(-50px);} to {opacity:1; transform:translateY(0);} }
+@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+
+/* Card central do launcher */
+#app {
+  background:white;
+  border-radius:15px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  padding:30px 40px;
+  max-width:550px;
+  width:90%;
+  text-align:center;
+  position:relative;
+  display:none;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+#app.sair { opacity:0; transform:scale(0.95); }
+
+/* Logo no card - continua usando logo.ico */
+#logo-card { width: 450px; margin-bottom:25px; }
+
+/* Título */
+h1.app-title { margin-bottom:15px; line-height:1.2; font-size:2.5rem; color:#004aad; font-weight:700; text-transform:uppercase; letter-spacing:1px; }
+
+/* Intro */
+p.intro { color:#333; margin-bottom:20px; font-size:1.2rem; }
+
+/* Inputs e select */
+input, select {
+  width:100%; padding:14px; margin-bottom:15px;
+  border-radius:8px; border:1px solid #ccc; font-size:1rem; transition:0.3s;
+}
+input:focus, select:focus { border-color:#007bff; outline:none; }
+
+/* Botões */
+.btn { background:#007bff; color:white; border:none; padding:14px 25px; font-size:1.1rem; border-radius:8px; cursor:pointer; margin:5px; transition:0.3s; box-shadow:0 5px 15px rgba(0,0,0,0.2);}
+.btn:hover { background:#0056b3; transform:scale(1.08); box-shadow:0 8px 20px rgba(0,0,0,0.3);}
+.btn-sair { background:#ff4d4d; }
+.btn-sair:hover { background:#cc0000; transform:scale(1.08); }
+
+/* Mensagem de sucesso */
+#success-msg { display:none; color:green; font-weight:bold; margin-top:15px; font-size:1.2rem; position:relative; }
+
+/* Confetes do card */
+#confetti { position:absolute; top:0; left:0; right:0; bottom:0; pointer-events:none; overflow:hidden; z-index:10; }
+
+/* Tela de congratulation cinematográfica */
+#congrats {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background: linear-gradient(135deg, #e0f0ff, #ffffff);
+  display:flex; justify-content:center; align-items:center; flex-direction:column;
+  z-index:50; display:none; overflow:hidden; opacity:1; transition: opacity 1s ease;
+}
+
+/* Card interno da congratulation */
+#congrats-card {
+  background:white;
+  border-radius:20px;
+  padding:40px 50px;
+  max-width:80%;
+  min-width:300px;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,0.25);
+  display:flex; flex-direction:column; align-items:center;
+  animation:fadeInScale 1s;
+}
+@keyframes fadeInScale { from {opacity:0; transform:scale(0.8);} to {opacity:1; transform:scale(1);} }
+
+/* Logo na tela de congratulation - continua usando logo.ico */
+#congrats-logo { width: 300px; margin-bottom:25px; animation:fadeInDown 1s; }
+
+/* Texto principal */
+#congrats h2 { font-size:2.8rem; color:#004aad; text-shadow: 2px 2px 10px rgba(0,0,0,0.3); animation:fadeInUp 1s; word-break: break-word; }
+#congrats p { font-size:1.8rem; color:#004aad; text-shadow:1px 1px 4px rgba(0,0,0,0.2); animation:fadeInUp 1s; }
+
+/* Confetes cinematográficos sofisticados */
+#congrats-confetti { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; overflow:hidden; z-index:10; }
+.congrats-confetto {
+  width:15px; height:15px; position:absolute; border-radius:50%;
+  opacity:0;
+  animation:fallConfetti 3s forwards;
+}
+@keyframes fallConfetti {
+  0% { transform: translateY(0) rotate(0deg) scale(0.5); opacity:1; }
+  100% { transform: translateY(700px) rotate(720deg) scale(1.2); opacity:0; }
+}
+</style>
+</head>
+<body>
+
+<!-- Splash -->
+<div id="splash">
+  <img src="logo.ico" alt="UniCesumar Logo">
+  <p>Carregando...</p>
+</div>
+
+<!-- Launcher -->
+<div id="app">
+  <img id="logo-card" src="logo.ico" alt="UniCesumar Logo">
+  <h1 class="app-title">Indique & Ganhe</h1>
+  <p class="intro">Indique um amigo e ganhe até <strong>25% de desconto</strong> na sua mensalidade!</p>
+
+  <form id="form-indicacao" onsubmit="enviarIndicacao(event)">
+    <input type="text" id="nome-indicador" placeholder="Seu nome" required />
+    <input type="tel" id="telefone-indicador" placeholder="Seu telefone" required />
+    <input type="text" id="nome-indicado" placeholder="Nome do amigo" required />
+    <input type="tel" id="telefone-indicado" placeholder="Telefone do amigo" required />
+    <select id="area-interesse">
+      <option value="">Área de interesse (opcional)</option>
+      <option>Educação, Artes e Design</option>
+      <option>Gestão de Negócios</option>
+      <option>Jurídico e Segurança</option>
+      <option>Comunicação</option>
+      <option>Saúde Animal</option>
+      <option>Agrárias e Meio Ambiente</option>
+      <option>Alimentos e Bebidas</option>
+      <option>Engenharias e Arquitetura</option>
+      <option>Saúde e Bem-Estar</option>
+      <option>Tecnologia</option>
+    </select>
+
+    <div>
+      <button type="submit" class="btn">Enviar Indicação</button>
+      <button type="button" class="btn btn-sair" onclick="sairApp()">Sair</button>
+    </div>
+
+    <div id="success-msg">Indicação enviada com sucesso!</div>
+  </form>
+
+  <div id="confetti"></div>
+</div>
+
+<!-- Tela de congratulation sofisticada -->
+<div id="congrats">
+  <div id="congrats-card">
+    <img id="congrats-logo" src="logo.ico" alt="UniCesumar Logo">
+    <h2 id="congrats-text"></h2>
+  </div>
+  <div id="congrats-confetti"></div>
+</div>
+
+<script>
+// Splash inicial
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    const splash = document.getElementById("splash");
+    splash.style.opacity=0;
+    setTimeout(()=>{
+      splash.style.display="none";
+      document.getElementById("app").style.display="block";
+    },1500);
+  },2000);
+});
+
+// Enviar indicação
+function enviarIndicacao(event){
+  event.preventDefault();
+  const nomeIndicador = document.getElementById("nome-indicador").value;
+  const data={
+    nomeIndicador: nomeIndicador,
+    telefoneIndicador:document.getElementById("telefone-indicador").value,
+    nomeIndicado:document.getElementById("nome-indicado").value,
+    telefoneIndicado:document.getElementById("telefone-indicado").value,
+    areaInteresse:document.getElementById("area-interesse").value
+  };
+  fetch("https://script.google.com/macros/s/AKfycbz_mRW8coFu8X-oGThKXm3p74KjHaTmPQcvUmB28Xq64L7S3ZRSWeUrochj19qjHNHY/exec",{
+    method:"POST", mode:"no-cors", body:JSON.stringify(data)
+  }).then(()=>{
+    mostrarCongrats(nomeIndicador);
+    document.getElementById("form-indicacao").reset();
+  });
+}
+
+// Tela de congratulation com nome
+function mostrarCongrats(nome){
+  const c = document.getElementById("congrats");
+  const confettiContainer = document.getElementById("congrats-confetti");
+  const texto = document.getElementById("congrats-text");
+
+  texto.textContent = `Parabéns, ${nome}! Obrigado por sua indicação`;
+
+  c.style.display="flex"; 
+  c.style.opacity=1;
+
+  // Cria confetes
+  for(let i=0;i<300;i++){
+    let conf=document.createElement("div");
+    conf.className="congrats-confetto";
+    conf.style.left=Math.random()*100+"%";
+    conf.style.backgroundColor=`hsl(${Math.random()*360},90%,60%)`;
+    conf.style.animationDuration=(2+Math.random()*2)+"s";
+    conf.style.transform=`rotate(${Math.random()*360}deg)`;
+    confettiContainer.appendChild(conf);
+    setTimeout(()=>{ conf.remove(); },5000);
+  }
+
+  // Desaparece suavemente após 5 segundos
+  setTimeout(()=>{
+    c.style.transition="opacity 1s ease";
+    c.style.opacity=0;
+    setTimeout(()=>{ c.style.display="none"; c.style.opacity=1; },1000);
+  },5000);
+}
+
+// Sair → animação e abre Studeo
+function sairApp(){
+  const app=document.getElementById("app");
+  app.classList.add("sair");
+  setTimeout(()=>{ window.location.href="https://studeo.unicesumar.edu.br/#!/access/login"; },800);
+}
+</script>
+</body>
+</html>
